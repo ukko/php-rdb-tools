@@ -7,19 +7,30 @@ class RDB
 {
 
     /**
+     * RDB filepath
+     *
      * @var string
      */
     protected $file     = null;
 
     /**
+     * Version RDB file
+     *
      * @var int
      */
-    protected $format   = null;
-
-    protected $fileType = null;
+    protected $version   = null;
 
     /**
-     * @param null $file
+     * String REDIS
+     *
+     * @var string
+     */
+    protected $mime = null;
+
+
+    /**
+     *
+     * @param string $file
      */
     public function __construct( $file = null )
     {
@@ -30,7 +41,8 @@ class RDB
     }
 
     /**
-     * @param null $file
+     *
+     * @param string $file
      */
     public function setFile($file)
     {
@@ -50,12 +62,12 @@ class RDB
         return $this->file;
     }
 
-    public function getFileType()
+    public function getMime()
     {
 
     }
 
-    public function getFormat()
+    public function getVersion()
     {
 
     }
@@ -65,7 +77,8 @@ class RDB
         $fh     = fopen( $this->getFile(), "r");
         $file   = fread( $fh, filesize( $this->getFile() ) );
 
-        var_dump( unpack("a5redis/a4format", $file) );
+        var_dump( unpack("a5redis/a4format/H2selector/H2db/H2", $file) );
+        var_dump( unpack("H*", $file) );
 
 //        $this->setFileType( unpack("25ffd", $file) );
 
@@ -74,17 +87,17 @@ class RDB
         fclose($fh);
     }
 
-    public function setFileType($fileType)
+    public function setMime($fileType)
     {
-        $this->fileType = $fileType;
+        $this->mime = $fileType;
     }
 
     /**
      * @param int $format
      */
-    public function setFormat($format)
+    public function setVersion($format)
     {
-        $this->format = $format;
+        $this->version = $format;
     }
 
 }

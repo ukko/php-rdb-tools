@@ -9,7 +9,7 @@ class RDBTest extends PHPUnit_Framework_TestCase
     /**
      * @var \RDB\RDB
      */
-    protected $object;
+    protected $rdb;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -17,7 +17,7 @@ class RDBTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new \RDB\RDB;
+        $this->rdb = new \RDB\RDB;
     }
 
     /**
@@ -32,7 +32,22 @@ class RDBTest extends PHPUnit_Framework_TestCase
     {
         $file = __DIR__ . '/dumps/empty_database.rdb';
 
-        $this->object->setFile( $file );
-        $this->object->read();
+        $this->rdb->setFile( $file );
+
+//        $this->assertGreaterThanOrEqual( 3, $this->rdb->getVersion(), 'Expected redis file format >= 3' );
+
+        $this->rdb->read();
+    }
+
+
+    public function testIntSet16()
+    {
+        $file = __DIR__ . '/dumps/intset_16.rdb';
+
+        $this->rdb->setFile( $file );
+
+//        $this->assertGreaterThanOrEqual( 3, $this->rdb->getVersion(), 'Expected redis file format >= 3' );
+
+        $this->rdb->read();
     }
 }
